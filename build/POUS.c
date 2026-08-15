@@ -42,13 +42,20 @@ __end:
 
 
 void PROGRAM0_init__(PROGRAM0 *data__, BOOL retain) {
-  __INIT_VAR(data__->AUTO,__BOOL_LITERAL(FALSE),retain)
-  __INIT_VAR(data__->BPON,__BOOL_LITERAL(FALSE),retain)
-  __INIT_VAR(data__->BPOFF,__BOOL_LITERAL(FALSE),retain)
-  __INIT_VAR(data__->LED1,__BOOL_LITERAL(FALSE),retain)
-  __INIT_VAR(data__->LED2,__BOOL_LITERAL(FALSE),retain)
-  __INIT_VAR(data__->LED3,__BOOL_LITERAL(FALSE),retain)
-  __INIT_VAR(data__->LED4,__BOOL_LITERAL(FALSE),retain)
+  __INIT_LOCATED(BOOL,__IX2_5,data__->AUTO,retain)
+  __INIT_LOCATED_VALUE(data__->AUTO,__BOOL_LITERAL(FALSE))
+  __INIT_LOCATED(BOOL,__IX2_6,data__->BPON,retain)
+  __INIT_LOCATED_VALUE(data__->BPON,__BOOL_LITERAL(FALSE))
+  __INIT_LOCATED(BOOL,__IX2_7,data__->BPOFF,retain)
+  __INIT_LOCATED_VALUE(data__->BPOFF,__BOOL_LITERAL(FALSE))
+  __INIT_LOCATED(BOOL,__QX0_0,data__->LED1,retain)
+  __INIT_LOCATED_VALUE(data__->LED1,__BOOL_LITERAL(FALSE))
+  __INIT_LOCATED(BOOL,__QX0_1,data__->LED2,retain)
+  __INIT_LOCATED_VALUE(data__->LED2,__BOOL_LITERAL(FALSE))
+  __INIT_LOCATED(BOOL,__QX0_2,data__->LED3,retain)
+  __INIT_LOCATED_VALUE(data__->LED3,__BOOL_LITERAL(FALSE))
+  __INIT_LOCATED(BOOL,__QX0_3,data__->LED4,retain)
+  __INIT_LOCATED_VALUE(data__->LED4,__BOOL_LITERAL(FALSE))
   __INIT_VAR(data__->DEMANDE_ARRET,__BOOL_LITERAL(FALSE),retain)
   __INIT_VAR(data__->INHIBITION_AUTO,__BOOL_LITERAL(FALSE),retain)
   __INIT_VAR(data__->VA1,__BOOL_LITERAL(FALSE),retain)
@@ -65,45 +72,42 @@ void PROGRAM0_init__(PROGRAM0 *data__, BOOL retain) {
   TON_init__(&data__->TON6,retain);
   TON_init__(&data__->TON7,retain);
   TON_init__(&data__->TON8,retain);
-  F_TRIG_init__(&data__->F_TRIG1,retain);
-  F_TRIG_init__(&data__->F_TRIG2,retain);
+  R_TRIG_init__(&data__->R_TRIG1,retain);
 }
 
 // Code part
 void PROGRAM0_body__(PROGRAM0 *data__) {
   // Initialise TEMP variables
 
-  __SET_VAR(data__->F_TRIG1.,CLK,,__GET_VAR(data__->BPOFF,));
-  F_TRIG_body__(&data__->F_TRIG1);
-  if (__GET_VAR(data__->F_TRIG1.Q,)) {
+  if (__GET_LOCATED(data__->BPOFF,)) {
     __SET_VAR(data__->,DEMANDE_ARRET,,__BOOL_LITERAL(TRUE));
   };
-  if (!(__GET_VAR(data__->AUTO,))) {
+  if (!(__GET_LOCATED(data__->AUTO,))) {
     __SET_VAR(data__->,INHIBITION_AUTO,,__BOOL_LITERAL(FALSE));
   };
-  __SET_VAR(data__->,TOUT_ETEINT,,(((!(__GET_VAR(data__->LED4,)) && !(__GET_VAR(data__->LED3,))) && !(__GET_VAR(data__->LED2,))) && !(__GET_VAR(data__->LED1,))));
-  __SET_VAR(data__->F_TRIG2.,CLK,,__GET_VAR(data__->BPON,));
-  F_TRIG_body__(&data__->F_TRIG2);
-  if ((((__GET_VAR(data__->F_TRIG2.Q,) && !(__GET_VAR(data__->VA2,))) && !(__GET_VAR(data__->VA1,))) && __GET_VAR(data__->TOUT_ETEINT,))) {
-    __SET_VAR(data__->,LED2,,__BOOL_LITERAL(TRUE));
+  __SET_VAR(data__->,TOUT_ETEINT,,(((!(__GET_LOCATED(data__->LED4,)) && !(__GET_LOCATED(data__->LED3,))) && !(__GET_LOCATED(data__->LED2,))) && !(__GET_LOCATED(data__->LED1,))));
+  __SET_VAR(data__->R_TRIG1.,CLK,,__GET_LOCATED(data__->BPON,));
+  R_TRIG_body__(&data__->R_TRIG1);
+  if ((((((!(__GET_VAR(data__->INHIBITION_AUTO,)) && __GET_LOCATED(data__->AUTO,)) || __GET_VAR(data__->R_TRIG1.Q,)) && !(__GET_VAR(data__->VA2,))) && !(__GET_VAR(data__->VA1,))) && __GET_VAR(data__->TOUT_ETEINT,))) {
+    __SET_LOCATED(data__->,LED2,,__BOOL_LITERAL(TRUE));
   };
-  __SET_VAR(data__->TON0.,IN,,(((!(__GET_VAR(data__->LED4,)) && !(__GET_VAR(data__->LED3,))) && __GET_VAR(data__->LED2,)) && !(__GET_VAR(data__->LED1,))));
+  __SET_VAR(data__->TON0.,IN,,(((!(__GET_LOCATED(data__->LED4,)) && !(__GET_LOCATED(data__->LED3,))) && __GET_LOCATED(data__->LED2,)) && !(__GET_LOCATED(data__->LED1,))));
   __SET_VAR(data__->TON0.,PT,,__GET_VAR(data__->TEMPO,));
   TON_body__(&data__->TON0);
   if (__GET_VAR(data__->TON0.Q,)) {
-    __SET_VAR(data__->,LED1,,__BOOL_LITERAL(TRUE));
+    __SET_LOCATED(data__->,LED1,,__BOOL_LITERAL(TRUE));
   };
-  __SET_VAR(data__->TON3.,IN,,(((!(__GET_VAR(data__->LED4,)) && !(__GET_VAR(data__->LED3,))) && __GET_VAR(data__->LED2,)) && __GET_VAR(data__->LED1,)));
+  __SET_VAR(data__->TON3.,IN,,(((!(__GET_LOCATED(data__->LED4,)) && !(__GET_LOCATED(data__->LED3,))) && __GET_LOCATED(data__->LED2,)) && __GET_LOCATED(data__->LED1,)));
   __SET_VAR(data__->TON3.,PT,,__GET_VAR(data__->TEMPO,));
   TON_body__(&data__->TON3);
   if (__GET_VAR(data__->TON3.Q,)) {
-    __SET_VAR(data__->,LED2,,__BOOL_LITERAL(FALSE));
+    __SET_LOCATED(data__->,LED2,,__BOOL_LITERAL(FALSE));
   };
-  __SET_VAR(data__->TON1.,IN,,(((!(__GET_VAR(data__->LED4,)) && !(__GET_VAR(data__->LED3,))) && !(__GET_VAR(data__->LED2,))) && __GET_VAR(data__->LED1,)));
+  __SET_VAR(data__->TON1.,IN,,(((!(__GET_LOCATED(data__->LED4,)) && !(__GET_LOCATED(data__->LED3,))) && !(__GET_LOCATED(data__->LED2,))) && __GET_LOCATED(data__->LED1,)));
   __SET_VAR(data__->TON1.,PT,,__GET_VAR(data__->TEMPO,));
   TON_body__(&data__->TON1);
   if (__GET_VAR(data__->TON1.Q,)) {
-    __SET_VAR(data__->,LED1,,__BOOL_LITERAL(FALSE));
+    __SET_LOCATED(data__->,LED1,,__BOOL_LITERAL(FALSE));
   };
   if (__GET_VAR(data__->TON1.Q,)) {
     __SET_VAR(data__->,VA2,,__BOOL_LITERAL(TRUE));
@@ -112,22 +116,22 @@ void PROGRAM0_body__(PROGRAM0 *data__) {
   __SET_VAR(data__->TON2.,PT,,__GET_VAR(data__->TEMPO,));
   TON_body__(&data__->TON2);
   if (__GET_VAR(data__->TON2.Q,)) {
-    __SET_VAR(data__->,LED3,,__BOOL_LITERAL(TRUE));
+    __SET_LOCATED(data__->,LED3,,__BOOL_LITERAL(TRUE));
   };
-  __SET_VAR(data__->TON4.,IN,,(((!(__GET_VAR(data__->LED4,)) && __GET_VAR(data__->LED3,)) && !(__GET_VAR(data__->LED2,))) && !(__GET_VAR(data__->LED1,))));
+  __SET_VAR(data__->TON4.,IN,,(((!(__GET_LOCATED(data__->LED4,)) && __GET_LOCATED(data__->LED3,)) && !(__GET_LOCATED(data__->LED2,))) && !(__GET_LOCATED(data__->LED1,))));
   __SET_VAR(data__->TON4.,PT,,__GET_VAR(data__->TEMPO,));
   TON_body__(&data__->TON4);
   if (__GET_VAR(data__->TON4.Q,)) {
-    __SET_VAR(data__->,LED4,,__BOOL_LITERAL(TRUE));
+    __SET_LOCATED(data__->,LED4,,__BOOL_LITERAL(TRUE));
   };
-  __SET_VAR(data__->TON5.,IN,,(((__GET_VAR(data__->LED4,) && __GET_VAR(data__->LED3,)) && !(__GET_VAR(data__->LED2,))) && !(__GET_VAR(data__->LED1,))));
+  __SET_VAR(data__->TON5.,IN,,(((__GET_LOCATED(data__->LED4,) && __GET_LOCATED(data__->LED3,)) && !(__GET_LOCATED(data__->LED2,))) && !(__GET_LOCATED(data__->LED1,))));
   __SET_VAR(data__->TON5.,PT,,__GET_VAR(data__->TEMPO,));
   TON_body__(&data__->TON5);
   if (__GET_VAR(data__->TON5.Q,)) {
-    __SET_VAR(data__->,LED3,,__BOOL_LITERAL(FALSE));
+    __SET_LOCATED(data__->,LED3,,__BOOL_LITERAL(FALSE));
   };
   if (__GET_VAR(data__->TON5.Q,)) {
-    __SET_VAR(data__->,LED4,,__BOOL_LITERAL(FALSE));
+    __SET_LOCATED(data__->,LED4,,__BOOL_LITERAL(FALSE));
   };
   if (__GET_VAR(data__->TON5.Q,)) {
     __SET_VAR(data__->,VA1,,__BOOL_LITERAL(TRUE));
@@ -139,58 +143,58 @@ void PROGRAM0_body__(PROGRAM0 *data__) {
   __SET_VAR(data__->TON6.,PT,,__GET_VAR(data__->TEMPO,));
   TON_body__(&data__->TON6);
   if (__GET_VAR(data__->TON6.Q,)) {
-    __SET_VAR(data__->,LED1,,__BOOL_LITERAL(TRUE));
+    __SET_LOCATED(data__->,LED1,,__BOOL_LITERAL(TRUE));
   };
   if (__GET_VAR(data__->TON6.Q,)) {
-    __SET_VAR(data__->,LED2,,__BOOL_LITERAL(TRUE));
+    __SET_LOCATED(data__->,LED2,,__BOOL_LITERAL(TRUE));
   };
   if (__GET_VAR(data__->TON6.Q,)) {
-    __SET_VAR(data__->,LED3,,__BOOL_LITERAL(TRUE));
+    __SET_LOCATED(data__->,LED3,,__BOOL_LITERAL(TRUE));
   };
   if (__GET_VAR(data__->TON6.Q,)) {
-    __SET_VAR(data__->,LED4,,__BOOL_LITERAL(TRUE));
+    __SET_LOCATED(data__->,LED4,,__BOOL_LITERAL(TRUE));
   };
-  __SET_VAR(data__->TON7.,IN,,(((__GET_VAR(data__->LED4,) && __GET_VAR(data__->LED3,)) && __GET_VAR(data__->LED2,)) && __GET_VAR(data__->LED1,)));
+  __SET_VAR(data__->TON7.,IN,,(((__GET_LOCATED(data__->LED4,) && __GET_LOCATED(data__->LED3,)) && __GET_LOCATED(data__->LED2,)) && __GET_LOCATED(data__->LED1,)));
   __SET_VAR(data__->TON7.,PT,,__GET_VAR(data__->TEMPO,));
   TON_body__(&data__->TON7);
   if (__GET_VAR(data__->TON7.Q,)) {
-    __SET_VAR(data__->,LED1,,__BOOL_LITERAL(FALSE));
+    __SET_LOCATED(data__->,LED1,,__BOOL_LITERAL(FALSE));
   };
   if (__GET_VAR(data__->TON7.Q,)) {
-    __SET_VAR(data__->,LED2,,__BOOL_LITERAL(FALSE));
+    __SET_LOCATED(data__->,LED2,,__BOOL_LITERAL(FALSE));
   };
   if (__GET_VAR(data__->TON7.Q,)) {
-    __SET_VAR(data__->,LED3,,__BOOL_LITERAL(FALSE));
+    __SET_LOCATED(data__->,LED3,,__BOOL_LITERAL(FALSE));
   };
   if (__GET_VAR(data__->TON7.Q,)) {
-    __SET_VAR(data__->,LED4,,__BOOL_LITERAL(FALSE));
+    __SET_LOCATED(data__->,LED4,,__BOOL_LITERAL(FALSE));
   };
   if (__GET_VAR(data__->TON7.Q,)) {
     __SET_VAR(data__->,VA2,,__BOOL_LITERAL(TRUE));
   };
-  if (((!(__GET_VAR(data__->DEMANDE_ARRET,)) && __GET_VAR(data__->AUTO,)) && __GET_VAR(data__->T8_DONE,))) {
-    __SET_VAR(data__->,LED2,,__BOOL_LITERAL(TRUE));
+  if (((!(__GET_VAR(data__->DEMANDE_ARRET,)) && __GET_LOCATED(data__->AUTO,)) && __GET_VAR(data__->T8_DONE,))) {
+    __SET_LOCATED(data__->,LED2,,__BOOL_LITERAL(TRUE));
   };
-  if (((!(__GET_VAR(data__->DEMANDE_ARRET,)) && __GET_VAR(data__->AUTO,)) && __GET_VAR(data__->T8_DONE,))) {
+  if (((!(__GET_VAR(data__->DEMANDE_ARRET,)) && __GET_LOCATED(data__->AUTO,)) && __GET_VAR(data__->T8_DONE,))) {
     __SET_VAR(data__->,VA1,,__BOOL_LITERAL(FALSE));
   };
-  if (((!(__GET_VAR(data__->DEMANDE_ARRET,)) && __GET_VAR(data__->AUTO,)) && __GET_VAR(data__->T8_DONE,))) {
+  if (((!(__GET_VAR(data__->DEMANDE_ARRET,)) && __GET_LOCATED(data__->AUTO,)) && __GET_VAR(data__->T8_DONE,))) {
     __SET_VAR(data__->,VA2,,__BOOL_LITERAL(FALSE));
   };
   __SET_VAR(data__->TON8.,IN,,((__GET_VAR(data__->VA2,) && __GET_VAR(data__->VA1,)) && __GET_VAR(data__->TOUT_ETEINT,)));
   __SET_VAR(data__->TON8.,PT,,__GET_VAR(data__->TEMPO,));
   TON_body__(&data__->TON8);
   __SET_VAR(data__->,T8_DONE,,__GET_VAR(data__->TON8.Q,));
-  if (((__GET_VAR(data__->DEMANDE_ARRET,) || !(__GET_VAR(data__->AUTO,))) && __GET_VAR(data__->T8_DONE,))) {
+  if ((!(__GET_LOCATED(data__->AUTO,)) && __GET_VAR(data__->T8_DONE,))) {
     __SET_VAR(data__->,VA1,,__BOOL_LITERAL(FALSE));
   };
-  if ((!(__GET_VAR(data__->AUTO,)) && __GET_VAR(data__->T8_DONE,))) {
+  if ((!(__GET_LOCATED(data__->AUTO,)) && __GET_VAR(data__->T8_DONE,))) {
     __SET_VAR(data__->,VA2,,__BOOL_LITERAL(FALSE));
   };
-  if ((!(__GET_VAR(data__->AUTO,)) && __GET_VAR(data__->T8_DONE,))) {
+  if (((__GET_VAR(data__->DEMANDE_ARRET,) && __GET_VAR(data__->T8_DONE,)) || (!(__GET_LOCATED(data__->AUTO,)) && __GET_VAR(data__->T8_DONE,)))) {
     __SET_VAR(data__->,DEMANDE_ARRET,,__BOOL_LITERAL(FALSE));
   };
-  if ((!(__GET_VAR(data__->AUTO,)) && __GET_VAR(data__->T8_DONE,))) {
+  if ((!(__GET_LOCATED(data__->AUTO,)) && __GET_VAR(data__->T8_DONE,))) {
     __SET_VAR(data__->,INHIBITION_AUTO,,__BOOL_LITERAL(TRUE));
   };
 

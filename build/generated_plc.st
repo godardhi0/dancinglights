@@ -1,20 +1,20 @@
 PROGRAM program0
   VAR
-    AUTO AT %IX0.0 : BOOL;
-    BPON AT %IX0.1 : BOOL;
-    BPOFF AT %IX0.2 : BOOL;
+    AUTO AT %IX2.5 : BOOL;
+    BPON AT %IX2.6 : BOOL;
+    BPOFF AT %IX2.7 : BOOL;
     LED1 AT %QX0.0 : BOOL;
     LED2 AT %QX0.1 : BOOL;
     LED3 AT %QX0.2 : BOOL;
     LED4 AT %QX0.3 : BOOL;
-    Demande_arret AT %MX0.3 : BOOL := FALSE;
-    Inhibition_auto AT %MX0.4 : BOOL := FALSE;
-    Va1 AT %MX0.0 : BOOL := FALSE;
-    Va2 AT %MX0.1 : BOOL := FALSE;
-    tout_eteint AT %MX0.2 : BOOL := FALSE;
-    T8_done AT %MX0.3 : BOOL;
   END_VAR
   VAR
+    Demande_arret : BOOL;
+    Inhibition_auto : BOOL;
+    Va1 : BOOL;
+    Va2 : BOOL;
+    tout_eteint : BOOL;
+    T8_done : BOOL;
     Tempo : TIME := T#500ms;
     TON0 : TON;
     TON1 : TON;
@@ -25,20 +25,18 @@ PROGRAM program0
     TON6 : TON;
     TON7 : TON;
     TON8 : TON;
-    F_TRIG1 : F_TRIG;
-    F_TRIG2 : F_TRIG;
+    R_TRIG1 : R_TRIG;
   END_VAR
 
-  F_TRIG1(CLK := BPOFF);
-  IF F_TRIG1.Q THEN
+  IF BPOFF THEN
     Demande_arret := TRUE; (*set*)
   END_IF;
   IF NOT(AUTO) THEN
     Inhibition_auto := FALSE; (*reset*)
   END_IF;
   tout_eteint := NOT(LED4) AND NOT(LED3) AND NOT(LED2) AND NOT(LED1);
-  F_TRIG2(CLK := BPON);
-  IF F_TRIG2.Q AND NOT(Va2) AND NOT(Va1) AND tout_eteint THEN
+  R_TRIG1(CLK := BPON);
+  IF (NOT(Inhibition_auto) AND AUTO OR R_TRIG1.Q) AND NOT(Va2) AND NOT(Va1) AND tout_eteint THEN
     LED2 := TRUE; (*set*)
   END_IF;
   TON0(IN := NOT(LED4) AND NOT(LED3) AND LED2 AND NOT(LED1), PT := Tempo);
@@ -117,13 +115,13 @@ PROGRAM program0
   END_IF;
   TON8(IN := Va2 AND Va1 AND tout_eteint, PT := Tempo);
   T8_done := TON8.Q;
-  IF (Demande_arret OR NOT(AUTO)) AND T8_done THEN
+  IF NOT(AUTO) AND T8_done THEN
     Va1 := FALSE; (*reset*)
   END_IF;
   IF NOT(AUTO) AND T8_done THEN
     Va2 := FALSE; (*reset*)
   END_IF;
-  IF NOT(AUTO) AND T8_done THEN
+  IF Demande_arret AND T8_done OR NOT(AUTO) AND T8_done THEN
     Demande_arret := FALSE; (*reset*)
   END_IF;
   IF NOT(AUTO) AND T8_done THEN

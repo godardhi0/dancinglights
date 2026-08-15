@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <project xmlns="http://www.plcopen.org/xml/tc6_0201" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ns1="http://www.plcopen.org/xml/tc6_0201">
   <fileHeader companyName="Inconnu" productName="SansNom" productVersion="1" creationDateTime="2026-08-12T11:47:00"/>
-  <contentHeader name="SansNom" modificationDateTime="2026-08-13T12:11:19">
+  <contentHeader name="SansNom" modificationDateTime="2026-08-15T15:21:53">
     <coordinateInfo>
       <fbd>
         <scaling x="10" y="10"/>
@@ -76,40 +76,41 @@
                 <xhtml:p><![CDATA[	Voyant 4]]></xhtml:p>
               </documentation>
             </variable>
-            <variable name="Demande_arret" address="%MX0.3">
+          </localVars>
+          <localVars>
+            <variable name="Demande_arret">
               <type>
                 <BOOL/>
               </type>
-              <initialValue>
-                <simpleValue value="FALSE"/>
-              </initialValue>
               <documentation>
                 <xhtml:p><![CDATA[	Mémorise l'appui sur BPOFF jusqu'à la fin du cycle en cours]]></xhtml:p>
               </documentation>
             </variable>
-            <variable name="Inhibition_auto" address="%MX0.4">
+            <variable name="Inhibition_auto">
               <type>
                 <BOOL/>
               </type>
-              <initialValue>
-                <simpleValue value="FALSE"/>
-              </initialValue>
               <documentation>
                 <xhtml:p><![CDATA[	Empêche un redémarrage auto immédiat après un arrêt BPOFF tant que AUTO reste à 1]]></xhtml:p>
               </documentation>
             </variable>
-            <variable name="Va1" address="%MX0.0">
+            <variable name="Va1">
               <type>
                 <BOOL/>
               </type>
-              <initialValue>
-                <simpleValue value="FALSE"/>
-              </initialValue>
               <documentation>
                 <xhtml:p><![CDATA[	Variable auxiliaire 1]]></xhtml:p>
               </documentation>
             </variable>
-            <variable name="Va2" address="%MX0.1">
+            <variable name="Va2">
+              <type>
+                <BOOL/>
+              </type>
+              <documentation>
+                <xhtml:p><![CDATA[	Variable auxiliaire 2]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="tout_eteint">
               <type>
                 <BOOL/>
               </type>
@@ -120,18 +121,7 @@
                 <xhtml:p><![CDATA[	Variable auxiliaire 2]]></xhtml:p>
               </documentation>
             </variable>
-            <variable name="tout_eteint" address="%MX0.2">
-              <type>
-                <BOOL/>
-              </type>
-              <initialValue>
-                <simpleValue value="FALSE"/>
-              </initialValue>
-              <documentation>
-                <xhtml:p><![CDATA[	Variable auxiliaire 2]]></xhtml:p>
-              </documentation>
-            </variable>
-            <variable name="T8_done" address="%MX0.3">
+            <variable name="T8_done">
               <type>
                 <BOOL/>
               </type>
@@ -139,8 +129,6 @@
                 <xhtml:p><![CDATA[	Reçoit la sortie Q de T8]]></xhtml:p>
               </documentation>
             </variable>
-          </localVars>
-          <localVars>
             <variable name="Tempo">
               <type>
                 <TIME/>
@@ -204,7 +192,7 @@
                 <xhtml:p><![CDATA[Réseau 1: mémorisation de la demande d'arrêt]]></xhtml:p>
               </content>
             </comment>
-            <contact localId="2" negated="false" width="21" height="20" edge="falling">
+            <contact localId="2" negated="false" width="21" height="20">
               <position x="120" y="90"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
@@ -438,12 +426,12 @@
               </connectionPointOut>
               <variable>Va2</variable>
             </contact>
-            <contact localId="23" negated="false" width="21" height="20" edge="falling">
-              <position x="780" y="180"/>
+            <contact localId="23" negated="false" width="21" height="20" edge="rising">
+              <position x="770" y="180"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="22">
-                  <position x="780" y="190"/>
+                  <position x="770" y="190"/>
                   <position x="731" y="190"/>
                 </connection>
               </connectionPointIn>
@@ -458,7 +446,7 @@
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="23">
                   <position x="850" y="190"/>
-                  <position x="801" y="190"/>
+                  <position x="791" y="190"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
